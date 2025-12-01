@@ -38,6 +38,11 @@ updateSpeedLabel(CONFIG.initialSpeedMs);
 
 // 绑定按钮事件
 startBtn.addEventListener('click', () => {
+  if (game.state === GAME_STATE.PAUSED) {
+    game.resume();
+    showStatus('继续前进，注意别撞墙~');
+    return;
+  }
   if (game.state === GAME_STATE.READY || game.state === GAME_STATE.OVER || game.state === GAME_STATE.WIN) {
     game.restart();
     showStatus('加油，吃到更多食物吧！');
@@ -47,8 +52,10 @@ startBtn.addEventListener('click', () => {
 pauseBtn.addEventListener('click', () => {
   if (game.state === GAME_STATE.RUNNING) {
     game.pause();
+    showStatus('已暂停，点击继续或按空格恢复');
   } else if (game.state === GAME_STATE.PAUSED) {
     game.resume();
+    showStatus('继续前进，注意别撞墙~');
   }
 });
 
